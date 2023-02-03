@@ -59,6 +59,51 @@ func login(w http.ResponseWriter, r *http.Request) {
 	t.ExecuteTemplate(w, "login", nil)
 }
 
+// TODO: Пока функция authorization не работает. Надо доработать
+
+func authorization(w http.ResponseWriter, r *http.Request) {
+	email := r.FormValue("email")
+	pass := r.FormValue("pass")
+
+	if email == "" || pass == "" {
+		fmt.Fprintf(w, "Please fill all fileds")
+	} else {
+
+		db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:8889)/golang")
+
+		if err != nil {
+			panic(err)
+		}
+		defer db.Close()
+
+		res, err := db.Query("SELECT * FROM `users`")
+
+		if err != nil {
+			panic(err)
+		}
+
+		for res.Next() {
+			var user User
+			err = res.Scan(&user.Id, &user.Name, &user.Email, &user.Pass)
+			if err != nil {
+				panic(err)
+			}
+			users = append(users, user)
+			if email != user.Email || pass != user.Pass {
+				fmt.Fprintf(w, "You are not registered ")
+
+			} else if email != user.Email && pass != user.Pass {
+				fmt.Fprintf(w, "You are not registered ")
+			} else {
+				http.Redirect(w, r, "/home/", http.StatusSeeOther)
+			}
+
+		}
+		http.Redirect(w, r, "/home/", http.StatusSeeOther)
+
+	}
+}
+
 func register(w http.ResponseWriter, r *http.Request) {
 	t, err := template.ParseFiles("templates/register.html")
 	if err != nil {
@@ -73,7 +118,7 @@ func save_data(w http.ResponseWriter, r *http.Request) {
 	pass := r.FormValue("pass")
 
 	if name == "" || email == "" || pass == "" {
-		fmt.Fprintf(w, "Please fill the fileds")
+		fmt.Fprintf(w, "Please fill all fileds")
 	} else {
 
 		db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:8889)/golang")
@@ -97,6 +142,7 @@ func save_data(w http.ResponseWriter, r *http.Request) {
 func handleRequest() {
 	http.HandleFunc("/home/", home)
 	http.HandleFunc("/login", login)
+	http.HandleFunc("/authorization", authorization)
 	http.HandleFunc("/register", register)
 	http.HandleFunc("/save_data", save_data)
 	http.ListenAndServe(":8080", nil)
