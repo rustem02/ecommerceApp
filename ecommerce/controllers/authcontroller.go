@@ -81,7 +81,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 			session.Values["loggedIn"] = true
 			session.Values["username"] = user.Username
-			//session.Values["username"] = user.Username
+			session.Values["pass"] = user.Pass
 			session.Values["name"] = user.Name
 
 			session.Save(r, w)

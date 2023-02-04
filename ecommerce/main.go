@@ -3,7 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	//_ "github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql"
 	"html/template"
 	"net/http"
 
@@ -39,7 +39,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 	for res.Next() {
 		var user User
-		err = res.Scan(&user.Id, &user.Name, &user.Email, &user.Pass)
+		err = res.Scan(&user.Id, &user.Name, &user.Email, &user.Username, &user.Pass)
 		if err != nil {
 			panic(err)
 		}
@@ -114,6 +114,7 @@ func register(w http.ResponseWriter, r *http.Request) {
 func save_data(w http.ResponseWriter, r *http.Request) {
 	name := r.FormValue("name")
 	email := r.FormValue("email")
+	username := r.FormValue("username")
 	pass := r.FormValue("pass")
 
 	if name == "" || email == "" || pass == "" {
@@ -127,7 +128,7 @@ func save_data(w http.ResponseWriter, r *http.Request) {
 		}
 		defer db.Close()
 
-		insert, err := db.Query(fmt.Sprintf("INSERT INTO `users` (`name`, `email`, `pass`) VALUES('%s', '%s', '%s')", name, email, pass))
+		insert, err := db.Query(fmt.Sprintf("INSERT INTO `users` (`name`, `email`, `username`, `pass`) VALUES('%s', '%s', '%s', '%s')", name, username, email, pass))
 
 		if err != nil {
 			panic(err)
@@ -145,8 +146,10 @@ func handleRequest() {
 	http.HandleFunc("/register", register)
 	http.HandleFunc("/save_data", save_data)
 
+	//новые функции, пока на доработке
 	http.HandleFunc("/", authcontroller.Index)
 	http.HandleFunc("/login", authcontroller.Login)
+	http.HandleFunc("/logout", authcontroller.Logout)
 
 	http.ListenAndServe(":8080", nil)
 
