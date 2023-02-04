@@ -3,17 +3,16 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	_ "github.com/go-sql-driver/mysql"
+	//_ "github.com/go-sql-driver/mysql"
 	"html/template"
 	"net/http"
+
+	authcontroller "github.com/jeypc/go-auth/controllers"
 )
 
 type User struct {
-	//Name  string `json:"name"`
-	//Email string `json:"email"`
-	//Pass  string `json:"pass"`
-	Id                uint16
-	Name, Email, Pass string
+	Id                          uint16
+	Name, Username, Email, Pass string
 }
 
 var users = []User{}
@@ -52,7 +51,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("templates/login.html")
+	t, err := template.ParseFiles("templates/login1.html")
 	if err != nil {
 		fmt.Fprintf(w, err.Error())
 	}
@@ -141,12 +140,19 @@ func save_data(w http.ResponseWriter, r *http.Request) {
 
 func handleRequest() {
 	http.HandleFunc("/home/", home)
-	http.HandleFunc("/login", login)
+	//http.HandleFunc("/login", login)
 	http.HandleFunc("/authorization", authorization)
 	http.HandleFunc("/register", register)
 	http.HandleFunc("/save_data", save_data)
+
+	http.HandleFunc("/", authcontroller.Index)
+	http.HandleFunc("/login", authcontroller.Login)
+
 	http.ListenAndServe(":8080", nil)
+
 }
+
+//TODO:Testing new functions
 
 func main() {
 	handleRequest()
