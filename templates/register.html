@@ -2,20 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <style>
+        .container {
+            max-width: 500px;
+        }
+    </style>
 </head>
 <body>
-Register
+<div class="container mt-5">
+    <form action="/save_data" method="post">
+        <h4 style="text-align: center">Sign Up</h4>
+        <hr/>
 
-<form action="/save_data" method="post">
-    <input type="text" name="name" id="name" placeholder="Enter your name" class="form-control"> <br>
-    <input type="email" name="email" id="email" placeholder="Enter your email" class="form-control"> <br>
-    <input type="text" name="username" id="username" placeholder="Enter your username" class="form-control"> <br>
-    <input type="password" name="pass" id="password" placeholder="Enter your pass" class="form-control"> <br>
-    <button class="btn btn-warning">Register</button>
-    <p>Already have an account? <a href="/login">login</a></p>
-</form>
 
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" class="form-control" autocomplete="off"/>
+            <div class="invalid-feedback">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" class="form-control" autocomplete="off"/>
+            <div class="invalid-feedback">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Username</label>
+            <input type="username" name="username" class="form-control" autocomplete="off"/>
+            <div class="invalid-feedback">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="pass" class="form-control" autocomplete="off"/>
+            <div class="invalid-feedback">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success btn-block">SIGN UP</button>
+        <hr/>
+        <center>
+            <p>Already have an account? <a href="/login">SIGN IN</a></p>
+        </center>
+    </form>
+</div>
 </body>
 </html>
 
