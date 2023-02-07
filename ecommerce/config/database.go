@@ -6,6 +6,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
+// Связка с ДБ
 func DBConn() (db *sql.DB, err error) {
 
 	//dbDriver := "mysql"

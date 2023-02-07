@@ -11,6 +11,8 @@ type UserModel struct {
 	db *sql.DB
 }
 
+// модель пользователся, который мы возьмем с БД
+
 func NewUserModel() *UserModel {
 	conn, err := config.DBConn()
 
@@ -39,6 +41,8 @@ func (u UserModel) Where(user *entities.User, fieldName, fieldValue string) erro
 
 	return nil
 }
+
+//функция для создание/insert пользователя
 
 func (u UserModel) Create(user entities.User) (int64, error) {
 
