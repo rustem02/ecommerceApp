@@ -15,7 +15,8 @@
 <body>
 <div class="container mt-5">
   <form action="/login" method="post">
-    <h4 style="text-align: center">SIGN IN</h4>
+    <h4>SIGN IN</h4>
+    <p>Email and password</p>
     <hr/>
 
     {{ if .error }}
@@ -25,10 +26,10 @@
     {{ end }}
 
     <div class="form-group">
-      <label>Username</label>
-      <input type="username" name="username" class="form-control {{ if .validation.Username }} is-invalid {{ end }}" autocomplete="off"/>
+      <label>Email</label>
+      <input type="email" name="email" class="form-control {{ if .validation.Email }} is-invalid {{ end }}" autocomplete="off"/>
       <div class="invalid-feedback">
-        {{ .validation.Username }}
+        {{ .validation.Email }}
       </div>
     </div>
 
