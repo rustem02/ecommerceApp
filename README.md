@@ -1,5 +1,6 @@
 # ecommerceApp
-    В проекте учавствуют: 
+  В проекте учавствуют:
+    
       Rustem Nygmet 200103424
       Mukhadas Telzhan 200103387
       Yerlan Yeldesov 200103084
