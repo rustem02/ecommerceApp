@@ -17,6 +17,9 @@ type UserInput struct {
 
 var userModel = models.NewUserModel()
 
+// главная страница.
+// Если мы не залогинились, то откроется стр логина
+
 func Index(w http.ResponseWriter, r *http.Request) {
 
 	session, _ := config.Store.Get(r, config.SESSION_ID)
@@ -38,6 +41,8 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 }
+
+//страница логина
 
 func Login(w http.ResponseWriter, r *http.Request) {
 
@@ -91,6 +96,9 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
+
+// функция logout, чтобы выйти из акк
+
 func Logout(w http.ResponseWriter, r *http.Request) {
 	session, _ := config.Store.Get(r, config.SESSION_ID)
 	// delete session

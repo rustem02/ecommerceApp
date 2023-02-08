@@ -17,6 +17,7 @@ type User struct {
 
 var users = []User{}
 
+// резервная страница хоум, в дальнейшем будет изменена или убрано
 func home(w http.ResponseWriter, r *http.Request) {
 
 	t, err := template.ParseFiles("templates/homePage.html")
@@ -27,13 +28,13 @@ func home(w http.ResponseWriter, r *http.Request) {
 	t.ExecuteTemplate(w, "home", nil)
 }
 
-func login(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("templates/login1.html")
-	if err != nil {
-		fmt.Fprintf(w, err.Error())
-	}
-	t.ExecuteTemplate(w, "login", nil)
-}
+//func login(w http.ResponseWriter, r *http.Request) {
+//	t, err := template.ParseFiles("templates/login1.html")
+//	if err != nil {
+//		fmt.Fprintf(w, err.Error())
+//	}
+//	t.ExecuteTemplate(w, "login", nil)
+//}
 
 // TODO: Пока функция authorization не работает. Надо доработать
 
@@ -80,6 +81,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 //	}
 //}
 
+// функция для отображение шаблона register.html, и не более
 func register(w http.ResponseWriter, r *http.Request) {
 	t, err := template.ParseFiles("templates/register.html")
 	if err != nil {
@@ -88,6 +90,8 @@ func register(w http.ResponseWriter, r *http.Request) {
 	t.ExecuteTemplate(w, "register", nil)
 }
 
+// функция для сохранение данных, которые мы ввели на странице /register
+// берем все поля которые мы ввели, и высылаем их на инсерт, таким образом, мы берем данные которые мы ввели на сайте и высылаем их на базу.
 func save_data(w http.ResponseWriter, r *http.Request) {
 	name := r.FormValue("name")
 	email := r.FormValue("email")
@@ -116,6 +120,8 @@ func save_data(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+//это типа urls.py на django. здесь хранятся все адресса страниц
+
 func handleRequest() {
 	http.HandleFunc("/home/", home)
 	//http.HandleFunc("/login", login)
@@ -132,7 +138,7 @@ func handleRequest() {
 
 }
 
-//TODO:Testing new functions
+//TODO:Основная функция
 
 func main() {
 	handleRequest()
