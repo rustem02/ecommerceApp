@@ -2,7 +2,7 @@
   В проекте учавствуют:
     
       Rustem Nygmet 200103424
-      Mukhadas Telzhan 200103387
+      Telzhan Mukhadas 200103387
       Yerlan Yeldesov 200103084
       Berik Serikbay 200103348
       Aina Akimniyazova 200103139
