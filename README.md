@@ -1,8 +1,9 @@
 # ecommerceApp
-
+  для клона:
+  
   git clone https://github.com/Krasav4ik01/ecommerceApp.git -b yourBranch
-
-  git add .
+  
+  для комита и пуша:
 
   git commit -m "just commit"
 
@@ -12,11 +13,15 @@
   надо скачать доп пакеты для работы с базой MySQL, 
   на терминале введем:
   
-  go mod init ecommerceApp
+  go mod init ecommerceApp(только если не работает проект, или возникли с ним трудности, а так не надо)
   
   go get -u github.com/go-sql-driver/mysql 
-    
-    
+  
+  go get github.com/gorilla/sessions
+  
+  go get github.com/jeypc/go-auth
+  
+  go get golang.org/x/crypto/bcrypt
 
     Не трогать ветку main. Работаем только со своими ветками
     
