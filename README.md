@@ -10,13 +10,13 @@
       
   для клона:
   
-  git clone https://github.com/Krasav4ik01/ecommerceApp.git -b yourBranch
+      git clone https://github.com/Krasav4ik01/ecommerceApp.git -b yourBranch
   
   для комита и пуша:
 
-  git commit -m "just commit"
+      git commit -m "just commit"
 
-  git push
+      git push
 
   
   надо скачать доп пакеты для работы с базой MySQL, 
@@ -34,7 +34,8 @@
 
     Не трогать ветку main. Работаем только со своими ветками
     
-    Для слияние веток: git merge
+    Для слияние веток: 
+        git merge
     
     
    Для удобство с работой гит лучше скачать GoLand https://www.jetbrains.com/help/go/installation-guide.html
