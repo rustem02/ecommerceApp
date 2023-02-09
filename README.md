@@ -24,7 +24,7 @@
   
   go mod init ecommerceApp(только если не работает проект, или возникли с ним трудности, а так не надо)
   
-  go get -u github.com/go-sql-driver/mysql 
+      go get -u github.com/go-sql-driver/mysql 
   
   go get github.com/gorilla/sessions (только если они не скачаны, а так не надо, поидеи через мерч они будут у вас, поэтому сначала делайте мерч, даже если после мерча не будут эти пакеты, тока тогда скачиваем)
   
