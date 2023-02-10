@@ -17,6 +17,11 @@
       git commit -m "just commit"
 
       git push
+      
+      
+  Для слияние веток:
+ 
+        git merge
 
   
   надо скачать доп пакеты для работы с базой MySQL, 
@@ -31,16 +36,23 @@
   
       go get github.com/gorilla/sessions 
   
-      go get github.com/jeypc/go-auth 
+      go get github.com/jeypc/go-auth/controllers(не объяз) 
   
       go get golang.org/x/crypto/bcrypt
 
  Не трогать ветку main. Работаем только со своими ветками
     
-    
- Для слияние веток:
+        
  
-        git merge
+ Доп команды, если проект не запустился, сначала удалаем go.mod, затем пишем на терминале:
+        
+        go mod init github.com/jeypc/go-auth
+        
+        
+    и затем введем команды выше /\
+        
+        
+        
     
     
    Для удобство с работой гит лучше скачать GoLand https://www.jetbrains.com/help/go/installation-guide.html
