@@ -7,7 +7,7 @@ import (
 	"html/template"
 	"net/http"
 
-	authcontroller "github.com/jeypc/go-auth/controllers"
+	authcontroller "github.com/jeypc/go-auth/ecommerce/controllers"
 )
 
 type User struct {
@@ -102,7 +102,7 @@ func save_data(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Please fill all fileds")
 	} else {
 
-		db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:8889)/golang")
+		db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/golang")
 
 		if err != nil {
 			panic(err)
