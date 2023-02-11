@@ -12,19 +12,9 @@
   
       git clone https://github.com/Krasav4ik01/ecommerceApp.git -b yourBranch
   
-  для комита и пуша:
-
-      git commit -m "just commit"
-
-      git push
-      
-      
-  Для слияние веток:
- 
-        git merge
 
   
-  надо скачать доп пакеты для работы с базой MySQL, 
+  надо скачать доп пакеты для работы с БД MySQL, 
   на терминале введем:
   
   
