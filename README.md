@@ -49,7 +49,7 @@
  
  Доп команды, если проект не запустился, сначала удалаем go.mod, затем пишем на терминале:
         
-        go mod init github.com/jeypc/go-auth
+        go mod init github.com/Krasav4ik01/ecommerceApp
         
         
  и затем введем команды выше /\
