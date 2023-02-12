@@ -3,8 +3,8 @@ package models
 import (
 	"database/sql"
 
-	"github.com/jeypc/go-auth/config"
-	"github.com/jeypc/go-auth/entities"
+	"github.com/Krasav4ik01/ecommerceApp/config"
+	"github.com/Krasav4ik01/ecommerceApp/entities"
 )
 
 type UserModel struct {

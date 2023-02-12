@@ -7,7 +7,7 @@ import (
 	"html/template"
 	"net/http"
 
-	authcontroller "github.com/jeypc/go-auth/controllers"
+	authcontroller "github.com/Krasav4ik01/ecommerceApp/controllers"
 )
 
 type User struct {
@@ -81,9 +81,9 @@ func home(w http.ResponseWriter, r *http.Request) {
 //	}
 //}
 
-// функция для отображение шаблона register.html, и не более
+// функция для отображение шаблона register1.html, и не более
 func register(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("templates/register.html")
+	t, err := template.ParseFiles("templates/register1.html")
 	if err != nil {
 		fmt.Fprintf(w, err.Error())
 	}
@@ -126,15 +126,17 @@ func handleRequest() {
 	http.HandleFunc("/home/", home)
 	//http.HandleFunc("/login", login)
 	//http.HandleFunc("/authorization", authorization)
-	http.HandleFunc("/register", register)
+	http.HandleFunc("/register1", register)
 	http.HandleFunc("/save_data", save_data)
 
 	//новые функции, пока на доработке
 	http.HandleFunc("/", authcontroller.Index)
 	http.HandleFunc("/login", authcontroller.Login)
 	http.HandleFunc("/logout", authcontroller.Logout)
+	http.HandleFunc("/register", authcontroller.Register)
 
 	http.ListenAndServe(":8080", nil)
+	fmt.Println("http://localhost:8080")
 
 }
 
