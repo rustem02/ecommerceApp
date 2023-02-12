@@ -5,10 +5,10 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/Krasav4ik01/ecommerceApp/config"
 	"github.com/go-playground/locales/en"
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
-	"github.com/jeypc/go-auth/config"
 
 	en_translations "github.com/go-playground/validator/v10/translations/en"
 )

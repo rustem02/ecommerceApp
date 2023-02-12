@@ -7,7 +7,7 @@ import (
 	"html/template"
 	"net/http"
 
-	authcontroller "github.com/jeypc/go-auth/controllers"
+	authcontroller "github.com/Krasav4ik01/ecommerceApp/controllers"
 )
 
 type User struct {

@@ -2,10 +2,10 @@ package controllers
 
 import (
 	"errors"
-	"github.com/jeypc/go-auth/config"
-	"github.com/jeypc/go-auth/entities"
-	"github.com/jeypc/go-auth/libraries"
-	"github.com/jeypc/go-auth/models"
+	"github.com/Krasav4ik01/ecommerceApp/config"
+	"github.com/Krasav4ik01/ecommerceApp/entities"
+	"github.com/Krasav4ik01/ecommerceApp/libraries"
+	"github.com/Krasav4ik01/ecommerceApp/models"
 	"golang.org/x/crypto/bcrypt"
 	"html/template"
 	"net/http"
