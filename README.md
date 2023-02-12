@@ -44,7 +44,7 @@
         go mod init github.com/Krasav4ik01/ecommerceApp
         
         
- и затем введем команды выше в пункте 3
+ и затем введем команды в пункте 3
         
         
         
