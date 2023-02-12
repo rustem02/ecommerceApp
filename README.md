@@ -29,7 +29,9 @@
       
       go get golang.org/x/crypto/bcrypt
       
-      go get github.com/gorilla/sessions 
+      go get github.com/gorilla/sessions
+      
+      go get github.com/go-playground/validator/v10
   
       
 
