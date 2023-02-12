@@ -12,14 +12,9 @@
   
       git clone https://github.com/Krasav4ik01/ecommerceApp.git -b yourBranch
   
-  для комита и пуша:
-
-      git commit -m "just commit"
-
-      git push
 
   
-  надо скачать доп пакеты для работы с базой MySQL, 
+  надо скачать доп пакеты для работы с БД MySQL, 
   на терминале введем:
   
   
@@ -29,19 +24,33 @@
   
   А эти команды введем только если они не скачаны, а так не надо, поидеи через мерч они будут у вас, поэтому сначала делайте мерч, даже если после мерча не будут эти пакеты, тока тогда скачиваем:
   
-      go get github.com/gorilla/sessions 
   
-      go get github.com/jeypc/go-auth 
-  
+      go get -u github.com/go-sql-driver/mysql 
+      
       go get golang.org/x/crypto/bcrypt
+      
+      go get github.com/gorilla/sessions
+      
+      go get github.com/go-playground/validator/v10
+  
+      
 
- Не трогать ветку main. Работаем только со своими ветками
+ Не трогать ветку main. Не делать merge на ветку main, я сам буду делать merge и не делать pull requests.
     
-    
- Для слияние веток:
+        
  
-        git merge
+ Доп команды, если проект не запустился, сначала удалаем go.mod, затем пишем на терминале:
+        
+        go mod init github.com/Krasav4ik01/ecommerceApp
+        
+        
+ и затем введем команды выше /\
+        
+        
+        
     
     
    Для удобство с работой гит лучше скачать GoLand https://www.jetbrains.com/help/go/installation-guide.html
    . Для студентов дается лицензия на год. Для этого заходите в JetBrains и регаетесь как студент(SDU email). Затем у вас будет доступ к продукциям JetBrains.
+   
+   А еще скачайте mamp для работы с БД MySql https://www.mamp.info/en/downloads/ 
