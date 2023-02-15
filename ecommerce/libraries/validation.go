@@ -47,7 +47,7 @@ func (v *Validation) Init() (*validator.Validate, ut.Translator) {
 	})
 
 	validate.RegisterTranslation("required", trans, func(ut ut.Translator) error {
-		return ut.Add("required", "{0} tidak boleh kosong", true)
+		return ut.Add("required", "{0} не может быть пустым", true)
 	}, func(ut ut.Translator, fe validator.FieldError) string {
 		t, _ := ut.T("required", fe.Field())
 		return t
@@ -65,7 +65,7 @@ func (v *Validation) Init() (*validator.Validate, ut.Translator) {
 	})
 
 	validate.RegisterTranslation("isunique", trans, func(ut ut.Translator) error {
-		return ut.Add("isunique", "{0} sudah digunakan", true)
+		return ut.Add("isunique", "{0} уже использованный", true)
 	}, func(ut ut.Translator, fe validator.FieldError) string {
 		t, _ := ut.T("isunique", fe.Field())
 		return t
