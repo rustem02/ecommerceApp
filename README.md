@@ -7,22 +7,14 @@
       Berik Serikbay 200103348
       Aina Akimniyazova 200103139
       
-      
-  1)для клона:
-  
-      git clone https://github.com/Krasav4ik01/ecommerceApp.git -b yourBranch
-  
 
-  
-  2)надо скачать доп пакеты для работы с БД MySQL, 
-  на терминале введем:
-  
-  
-  
-      go get -u github.com/go-sql-driver/mysql 
-  
-  
-  3)А эти команды введем только если они не скачаны, а так не надо, поидеи через мерч они будут у вас, поэтому сначала делайте мерч, даже если после мерча не будут эти пакеты, тока тогда скачиваем:
+ 
+Доп команды, если проект не запустился, сначала удалаем go.mod, затем пишем на терминале:
+        
+        go mod init github.com/Krasav4ik01/ecommerceApp
+        
+        
+ И затем введем команды ниже:
   
   
       go get -u github.com/go-sql-driver/mysql 
@@ -32,25 +24,4 @@
       go get github.com/gorilla/sessions
       
       go get github.com/go-playground/validator/v10
-  
-      
 
- 4)Не трогать ветку main. Не делать merge на ветку main, я сам буду делать merge и не делать pull requests.
-    
-        
- 
- 5)Доп команды, если проект не запустился, сначала удалаем go.mod, затем пишем на терминале:
-        
-        go mod init github.com/Krasav4ik01/ecommerceApp
-        
-        
- и затем введем команды в пункте 3
-        
-        
-        
-    
-    
-   6)Для удобство с работой гит лучше скачать GoLand https://www.jetbrains.com/help/go/installation-guide.html
-   . Для студентов дается лицензия на год. Для этого заходите в JetBrains и регаетесь как студент(SDU email). Затем у вас будет доступ к продукциям JetBrains.
-   
-   А еще скачайте mamp для работы с БД MySql https://www.mamp.info/en/downloads/ 
