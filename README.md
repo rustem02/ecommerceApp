@@ -14,7 +14,7 @@
         go mod init github.com/Krasav4ik01/ecommerceApp
         
         
- переместите папку templates в папку ecommerce, и затем введем команды ниже:
+ И затем введем команды ниже:
   
   
       go get -u github.com/go-sql-driver/mysql 
