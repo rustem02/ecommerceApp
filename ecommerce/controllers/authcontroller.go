@@ -195,7 +195,6 @@ func HandleSearch(w http.ResponseWriter, r *http.Request) {
 				"username": user.Username,
 				"name":     user.Name,
 				"email":    user.Email,
-				"pass":     user.Pass,
 			}
 
 			temp, _ := template.ParseFiles("templates/homePage.html")
