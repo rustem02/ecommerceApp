@@ -159,3 +159,47 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 }
+
+func HandleSearch(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method == http.MethodGet {
+		temp, err := template.ParseFiles("templates/homePage.html")
+		if err != nil {
+			panic(err)
+		}
+		temp.Execute(w, nil)
+	} else if r.Method == http.MethodPost {
+		r.ParseForm()
+		UserInput := &UserInput{
+			Username: r.Form.Get("username"),
+		}
+		var user entities.User
+		userModel.Where(&user, "username", UserInput.Username)
+		//editing
+		var message error
+		if user.Username == "" {
+			message = errors.New("User not found")
+		}
+
+		if message != nil {
+
+			data := map[string]interface{}{
+				"error": message,
+			}
+
+			temp, _ := template.ParseFiles("templates/homePage.html")
+			temp.Execute(w, data)
+		} else {
+			// set session
+			data := map[string]interface{}{
+				"username": user.Username,
+				"name":     user.Name,
+				"email":    user.Email,
+				"pass":     user.Pass,
+			}
+
+			temp, _ := template.ParseFiles("templates/homePage.html")
+			temp.Execute(w, data)
+		}
+	}
+}

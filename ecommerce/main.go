@@ -18,15 +18,15 @@ type User struct {
 var users = []User{}
 
 // резервная страница хоум, в дальнейшем будет изменена или убрано
-func home(w http.ResponseWriter, r *http.Request) {
-
-	t, err := template.ParseFiles("templates/homePage.html")
-	if err != nil {
-		fmt.Fprintf(w, err.Error())
-	}
-
-	t.ExecuteTemplate(w, "home", nil)
-}
+//func home(w http.ResponseWriter, r *http.Request) {
+//
+//	t, err := template.ParseFiles("templates/homePage.html")
+//	if err != nil {
+//		fmt.Fprintf(w, err.Error())
+//	}
+//
+//	t.ExecuteTemplate(w, "home", nil)
+//}
 
 //func login(w http.ResponseWriter, r *http.Request) {
 //	t, err := template.ParseFiles("templates/login1.html")
@@ -123,7 +123,7 @@ func save_data(w http.ResponseWriter, r *http.Request) {
 //это типа urls.py на django. здесь хранятся все адресса страниц
 
 func handleRequest() {
-	http.HandleFunc("/home/", home)
+	//http.HandleFunc("/home/", home)
 	//http.HandleFunc("/login", login)
 	//http.HandleFunc("/authorization", authorization)
 	http.HandleFunc("/register1", register)
@@ -134,6 +134,7 @@ func handleRequest() {
 	http.HandleFunc("/login", authcontroller.Login)
 	http.HandleFunc("/logout", authcontroller.Logout)
 	http.HandleFunc("/register", authcontroller.Register)
+	http.HandleFunc("/search", authcontroller.HandleSearch)
 
 	http.ListenAndServe(":8080", nil)
 	fmt.Println("http://localhost:8080")

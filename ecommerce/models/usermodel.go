@@ -36,7 +36,7 @@ func (u UserModel) Where(user *entities.User, fieldName, fieldValue string) erro
 	defer row.Close()
 
 	for row.Next() {
-		row.Scan(&user.Id, &user.Name, &user.Email, &user.Username, &user.Pass)
+		row.Scan(&user.Id, &user.Name, &user.Username, &user.Email, &user.Pass)
 	}
 
 	return nil
@@ -46,8 +46,8 @@ func (u UserModel) Where(user *entities.User, fieldName, fieldValue string) erro
 
 func (u UserModel) Create(user entities.User) (int64, error) {
 
-	result, err := u.db.Exec("insert into users (name, email, username, pass) values(?,?,?,?)",
-		user.Name, user.Email, user.Username, user.Pass)
+	result, err := u.db.Exec("insert into users (name, username, email, pass) values(?,?,?,?)",
+		user.Name, user.Username, user.Email, user.Pass)
 
 	if err != nil {
 		return 0, err
