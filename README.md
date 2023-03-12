@@ -7,7 +7,7 @@
       Berik Serikbay 200103348
       Aina Akimniyazova 200103139
       
-# Скачиваем MAMP, через него заходим в PhpMyAdmin, Создаем бд в MySql с таблицой: users, которые содержут поля id, name, email, username, pass. И дальше запускаем проект
+# Скачиваем MAMP, через него заходим в PhpMyAdmin, Создаем бд в MySql с таблицой: users, которые содержут поля: id, name, email, username, pass. И дальше запускаем проект
  
 Доп команды, если проект не запустился, сначала удалаем go.mod, затем пишем на терминале:
         
