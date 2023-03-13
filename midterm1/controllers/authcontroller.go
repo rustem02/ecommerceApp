@@ -16,8 +16,22 @@ type UserInput struct {
 	Pass     string
 }
 
+type ProductInput struct {
+	Title  string
+	Model  string
+	Price  int
+	Rating int
+}
+type ProductUser struct {
+	Title  string
+	Model  string
+	Price  int
+	Rating int
+}
+
 var userModel = models.NewUserModel()
 var validation = libraries.NewValidation()
+var productModel = models.NewProductModel()
 
 // главная страница.
 // Если мы не залогинились, то откроется стр логина
@@ -160,7 +174,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func HandleSearch(w http.ResponseWriter, r *http.Request) {
+func SearchUsers(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == http.MethodGet {
 		temp, err := template.ParseFiles("templates/homePage.html")
@@ -198,6 +212,116 @@ func HandleSearch(w http.ResponseWriter, r *http.Request) {
 			}
 
 			temp, _ := template.ParseFiles("templates/homePage.html")
+			temp.Execute(w, data)
+		}
+	}
+}
+
+func CreateProduct(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+
+		temp, _ := template.ParseFiles("templates/createProduct.html")
+		temp.Execute(w, nil)
+
+	} else if r.Method == http.MethodPost {
+		// процесс регистрации
+
+		r.ParseForm()
+
+		product := entities.Product{
+			Title:  r.Form.Get("title"),
+			Model:  r.Form.Get("model"),
+			Price:  r.Form.Get("price"),
+			Rating: r.Form.Get("rating"),
+		}
+
+		//errorMessages := validation.Struct(product)
+		//
+		//if errorMessages != nil {
+		//
+		//	data := map[string]interface{}{
+		//		"validation": errorMessages,
+		//		"user":       product,
+		//	}
+		//
+		//	temp, _ := template.ParseFiles("templates/createProduct.html")
+		//	temp.Execute(w, data)
+		//} else {
+
+		// защифровка пароля
+
+		// инсерт в БД
+		productModel.CreateProduct(product)
+		//Успешная регистрация
+		data := map[string]interface{}{
+			"event": "Product was successfully created",
+		}
+		temp, _ := template.ParseFiles("templates/createProduct.html")
+		temp.Execute(w, data)
+		//}
+	}
+}
+
+var products = []ProductUser{}
+
+func SearchProducts(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method == http.MethodGet {
+		temp, err := template.ParseFiles("templates/searchProducts.html")
+		if err != nil {
+			panic(err)
+		}
+		temp.Execute(w, nil)
+	} else if r.Method == http.MethodPost {
+		r.ParseForm()
+		ProductInput := &ProductInput{
+			Title: r.Form.Get("title"),
+		}
+		var product entities.Product
+		productModel.WhereProduct(&product, "title", ProductInput.Title)
+		//editing
+		var message error
+		if product.Title == "" {
+			message = errors.New("Product not found")
+		}
+
+		if message != nil {
+
+			data := map[string]interface{}{
+				"error": message,
+			}
+
+			temp, _ := template.ParseFiles("templates/searchProducts.html")
+			temp.Execute(w, data)
+		} else {
+			// set session
+			//db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:8889)/golang")
+			//if err != nil {
+			//	panic(err)
+			//}
+			//defer db.Close()
+			//res, err := db.Query("SELECT `title`, `model`, `price`, `rating` FROM `products`")
+			//if err != nil {
+			//	panic(err)
+			//}
+			//
+			//for res.Next() {
+			//	var productUsers ProductUser
+			//	err = res.Scan(&productUsers.Title, &productUsers.Model, &productUsers.Price, &productUsers.Rating)
+			//	if err != nil {
+			//		panic(err)
+			//	}
+			//
+			//	products = append(products, productUsers)
+			//}
+			data := map[string]interface{}{
+				"title":  product.Title,
+				"model":  product.Model,
+				"price":  product.Price,
+				"rating": product.Rating,
+			}
+
+			temp, _ := template.ParseFiles("templates/searchProducts.html")
 			temp.Execute(w, data)
 		}
 	}
