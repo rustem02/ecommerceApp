@@ -37,7 +37,7 @@ func init() {
 	initializers.ConnectDB()
 }
 
-// TODO:Основные функции
+// Основные функции
 // Глобалные изменения.
 func handleJSONRequests() {
 	r := gin.Default()
@@ -54,10 +54,15 @@ func handleJSONRequests() {
 }
 
 func main() {
+	handleJSONRequests()
 	//controllers.PostShowParseTemplate()
 	//controllers.PostsIndexParseTemplate()
-
-	handleJSONRequests()
-
+	//router := mux.NewRouter().StrictSlash(true)
+	//router.HandleFunc("/article", controllers.CreateNewPost)
+	//err := http.ListenAndServe(":8080", router)
+	//if err != nil {
+	//	fmt.Println(err.Error())
+	//}
 	//handleRequest()
+
 }
