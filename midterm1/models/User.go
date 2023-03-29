@@ -39,3 +39,30 @@ type Cart struct {
 	User      User    `gorm:"association_foreignkey:Refer"`
 	Quantity  uint
 }
+
+// Переделать модель Роли
+type Roles struct {
+	gorm.Model
+	RoleName string
+}
+
+type Orders struct {
+	gorm.Model
+	CartId      uint
+	OrderStatus string
+	Quantity    int
+	TotalPrice  uint
+}
+
+type Comments struct {
+	gorm.Model
+	UserID    int
+	ProductId int
+	Message   string
+	Rating    int
+}
+
+type Categodies struct {
+	gorm.Model
+	Title string
+}

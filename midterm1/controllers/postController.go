@@ -46,7 +46,7 @@ func PostsIndex(c *gin.Context) {
 	})
 }
 
-// TODO: Начал вытаскивать данные на фронтенд
+// Начал вытаскивать данные на фронтенд
 func PostsIndexParseTemplate() {
 	app := gin.Default()
 
@@ -118,3 +118,32 @@ func PostsDelete(c *gin.Context) {
 	//})
 	c.Status(200)
 }
+
+//func CreateNewPost(w http.ResponseWriter, r *http.Request) {
+//
+//	//var body struct {
+//	//	Title string
+//	//	Body  string
+//	//}
+//
+//	//post := models.Post{
+//	//	Title: r.Form.Get("title"),
+//	//	Body:  r.Form.Get("body"),
+//	//}
+//	//result := initializers.DB.Create(&post)
+//	//
+//	//data := map[string]interface{}{
+//	//	"post": post,
+//	//}
+//	//
+//	//if result.Error != nil {
+//	//	log.Fatal("Error in CreateNewPost")
+//	//	return
+//	//}
+//	////bodyReq, _ := ioutil.ReadAll(r.Body)
+//	//
+//	////fmt.Printf("%+v", string(bodyReq))
+//	//temp, _ := template.ParseFiles("templates/createPosts.html")
+//	//temp.Execute(w, data)
+//
+//}
