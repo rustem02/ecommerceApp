@@ -16,8 +16,6 @@
         
  И затем введем команды ниже:
   
-  
-      go get -u github.com/go-sql-driver/mysql 
       
       go get golang.org/x/crypto/bcrypt
       
