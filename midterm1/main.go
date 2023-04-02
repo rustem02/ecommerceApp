@@ -2,12 +2,16 @@ package main
 
 import (
 	"fmt"
+	db "github.com/Krasav4ik01/ecommerceApp/config"
 	"github.com/Krasav4ik01/ecommerceApp/controllers"
 	"github.com/Krasav4ik01/ecommerceApp/initializers"
 	"github.com/Krasav4ik01/ecommerceApp/middleware"
+	"github.com/Krasav4ik01/ecommerceApp/routes"
 	"github.com/gin-gonic/gin"
 	_ "github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	_ "github.com/lib/pq"
 	"net/http"
 )
@@ -17,16 +21,16 @@ import (
 func handleRequest() {
 
 	//новые функции, пока на доработке
-	http.HandleFunc("/", controllers.Index)
-	http.HandleFunc("/login", controllers.Login)
-	http.HandleFunc("/logout", controllers.Logout)
-	http.HandleFunc("/register", controllers.Register)
-	http.HandleFunc("/search", controllers.SearchUsers)
-
-	//http.HandleFunc("/publishTemplate", authcontroller.PublishTemplate)
-	//http.HandleFunc("/publish", authcontroller.PublishItem)
-	http.HandleFunc("/publish", controllers.CreateProduct)
-	http.HandleFunc("/searchProduct", controllers.SearchProducts)
+	//http.HandleFunc("/", controllers.Index)
+	//http.HandleFunc("/login", controllers.Login)
+	//http.HandleFunc("/logout", controllers.Logout)
+	//http.HandleFunc("/register", controllers.Register)
+	//http.HandleFunc("/search", controllers.SearchUsers)
+	//
+	////http.HandleFunc("/publishTemplate", authcontroller.PublishTemplate)
+	////http.HandleFunc("/publish", authcontroller.PublishItem)
+	//http.HandleFunc("/publish", controllers.CreateProduct)
+	//http.HandleFunc("/searchProduct", controllers.SearchProducts)
 
 	http.ListenAndServe(":8080", nil)
 	fmt.Println("http://localhost:8080")
@@ -54,15 +58,15 @@ func handleJSONRequests() {
 }
 
 func main() {
-	handleJSONRequests()
-	//controllers.PostShowParseTemplate()
-	//controllers.PostsIndexParseTemplate()
-	//router := mux.NewRouter().StrictSlash(true)
-	//router.HandleFunc("/article", controllers.CreateNewPost)
-	//err := http.ListenAndServe(":8080", router)
-	//if err != nil {
-	//	fmt.Println(err.Error())
-	//}
-	//handleRequest()
+	//handleJSONRequests()
+	fmt.Println("Запуск проекта...")
+	//db connection
+	db.Connect()
+
+	app := fiber.New()
+	app.Use(cors.New())
+	//routing
+	routes.Setup(app)
+	app.Listen(":8080")
 
 }
