@@ -25,7 +25,7 @@
       
       go get github.com/gin-gonic/gin
       
-      gorm.io/gorm"
+      gorm.io/gorm
       
       gorm.io/driver/sqlite
       
