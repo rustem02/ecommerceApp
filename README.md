@@ -16,12 +16,19 @@
         
  И затем введем команды ниже:
   
-  
-      go get -u github.com/go-sql-driver/mysql 
       
       go get golang.org/x/crypto/bcrypt
       
       go get github.com/gorilla/sessions
       
       go get github.com/go-playground/validator/v10
+      
+      go get github.com/gin-gonic/gin
+      
+      gorm.io/gorm"
+      
+      gorm.io/driver/sqlite
+      
+      github.com/golang-jwt/jwt/v4
+
 
