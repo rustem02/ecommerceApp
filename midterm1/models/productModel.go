@@ -18,6 +18,8 @@ type Product struct {
 	UpdatedAt        time.Time `json:"updated_at"`
 	CategoryId       int       `json:"categoryId"`
 	DiscountId       int       `json:"discountId"`
+	//ProductRating float32 `json:"productRating"`
+	//CountRating int `json:"countRating"`
 }
 
 type ProductResult struct {

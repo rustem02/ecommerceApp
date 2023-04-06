@@ -52,4 +52,8 @@ func Setup(app *fiber.App) {
 	app.Get("/revenues", controllers.GetRevenues)
 	app.Get("/solds", controllers.GetSolds)
 
+	//comments
+	app.Post("/comments", controllers.CreateAnotherComment)
+	app.Get("/comments", controllers.CommentsList)
+
 }
