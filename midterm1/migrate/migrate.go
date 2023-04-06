@@ -18,6 +18,6 @@ func init() {
 func main() {
 	initializers.DB.AutoMigrate(&models.Post{}, &models.User{})
 	//config.DB.AutoMigrate(&entities.User{}, &entities.Product{})
-	db.DB.AutoMigrate(&models.Cashier{}, &models.Category{}, &models.Payment{}, &models.PaymentType{}, &models.Product{}, &models.Discount{}, &models.Order{})
+	db.DB.AutoMigrate(&models.Cashier{}, &models.Category{}, &models.Payment{}, &models.PaymentType{}, &models.Product{}, &models.Discount{}, &models.Order{}, &models.Comment{})
 
 }

@@ -25,28 +25,28 @@ type Cart struct {
 }
 
 // Переделать модель Роли
-type Roles struct {
-	gorm.Model
-	RoleName string
-}
+//type Roles struct {
+//	gorm.Model
+//	RoleName string
+//}
 
-type Orders struct {
-	gorm.Model
-	CartId      uint
-	OrderStatus string
-	Quantity    int
-	TotalPrice  uint
-}
+//type Orders struct {
+//	gorm.Model
+//	CartId      uint
+//	OrderStatus string
+//	Quantity    int
+//	TotalPrice  uint
+//}
 
-type Comments struct {
-	gorm.Model
-	UserId    User    `gorm:"association_foreignkey:comments_user;"`
-	ProductId Product `gorm:"association_foreignkey:comments_product;"`
-	Message   string
-	Rating    int
-}
+//type Comments struct {
+//	gorm.Model
+//	UserId    User    `gorm:"association_foreignkey:comments_user;"`
+//	ProductId Product `gorm:"association_foreignkey:comments_product;"`
+//	Message   string
+//	Rating    int
+//}
 
-type Categodies struct {
-	gorm.Model
-	Title string
-}
+//type Categodies struct {
+//	gorm.Model
+//	Title string
+//}
