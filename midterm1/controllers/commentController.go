@@ -167,6 +167,7 @@ func CommentsList(c *fiber.Ctx) error {
 		Content   string         `json:"content"`
 		CreatedAt time.Time      `json:"createdAt"`
 		Cashiers  models.Cashier `json:"cashier"`
+		Product   models.Product `json:"product"`
 	}
 	CommentResponse := make([]*CommentList, 0)
 
@@ -183,6 +184,7 @@ func CommentsList(c *fiber.Ctx) error {
 			Content:   v.Content,
 			CreatedAt: v.CreatedAt,
 			Cashiers:  cashier,
+			Product:   product,
 		})
 
 	}
