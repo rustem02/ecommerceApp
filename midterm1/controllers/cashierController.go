@@ -155,7 +155,7 @@ func UpdateCashier(c *fiber.Ctx) error {
 
 // структура Cashiers
 type Cashiers struct {
-	Id        uint   `json:"cashierId"`
+	Id        int    `json:"cashierId"`
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
 	Email     string `json:"email"`
