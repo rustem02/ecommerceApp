@@ -93,26 +93,33 @@ func GetProductDetails(c *fiber.Ctx) error {
 	productId := c.Params("productId")
 	productsRes := make([]*models.ProductResult, 0)
 	var products []models.Product
+	var ratings []models.Rating
 	db.DB.Where("id = ? ", productId).Find(&products)
+
+	var averageRating float64
 
 	var category models.Category
 	var discount models.Discount
+	var rating models.Rating
 	for i := 0; i < len(products); i++ {
 		db.DB.Where("id = ?", products[i].CategoryId).Find(&category)
 
 		db.DB.Where("id = ?", products[i].DiscountId).Find(&discount)
+		db.DB.Find(&ratings, "product_rating")
+		db.DB.Model(&rating).Select("AVG(product_rating)").Where("product_id = ?", products[i].Id).Scan(&averageRating)
 
 		//productsRes =
 		productsRes = append(productsRes,
 			&models.ProductResult{
-				Id:       products[i].Id,
-				Sku:      products[i].Sku,
-				Name:     products[i].Name,
-				Stock:    products[i].Stock,
-				Price:    products[i].Price,
-				Image:    products[i].Image,
-				Category: category,
-				Discount: discount,
+				Id:            products[i].Id,
+				Sku:           products[i].Sku,
+				Name:          products[i].Name,
+				Stock:         products[i].Stock,
+				Price:         products[i].Price,
+				Image:         products[i].Image,
+				Category:      category,
+				Discount:      discount,
+				ProductRating: averageRating,
 			},
 		)
 	}
@@ -236,24 +243,135 @@ func ProductList(c *fiber.Ctx) error {
 	limit := c.Query("limit")
 	skip := c.Query("skip")
 	categoryId := c.Query("categoryId")
-	productName := c.Query("q")
-	//discountId := c.Query("discountId")
-	//rating := c.Query("rating")
+	productName := c.Query("name")
+	price := c.Query("price")
 	intLimit, _ := strconv.Atoi(limit)
 	intSkip, _ := strconv.Atoi(skip)
 	var products []models.Product
+	var ratings []models.Rating
 
 	productsRes := make([]*models.ProductResult, 0)
 
 	if productName == "" {
+		//filter by price
 		var count int64
-		db.DB.Where("category_id = ?", categoryId).Limit(intLimit).Offset(intSkip).Find(&products).Count(&count)
-		//db.DB.Where("discount_id = ?", discountId).Limit(intLimit).Offset(intSkip).Find(&products).Count(&count)
-		//db.DB.Where("product_rating = ?", rating).Limit(intLimit).Offset(intSkip).Find(&products).Count(&count)
+		var averageRating float64
+		db.DB.Where("price = ?", price).Limit(intLimit).Offset(intSkip).Find(&products).Count(&count)
 
 		var category models.Category
 		var discount models.Discount
-		//var ratings models.Rating
+		var rating models.Rating
+
+		for i := 0; i < len(products); i++ {
+
+			db.DB.Table("categories").Where("id = ?", products[i].CategoryId).Find(&category)
+
+			db.DB.Where("id = ?", products[i].DiscountId).Limit(intLimit).Offset(intSkip).Find(&discount).Count(&count)
+			db.DB.Find(&ratings, "product_rating")
+			db.DB.Model(&rating).Select("AVG(product_rating)").Where("product_id = ?", products[i].Id).Scan(&averageRating)
+
+			//ratingCount = int64(len(ratings))
+			//db.DB.Where("id = ?", products[i].RatingId).Limit(intLimit).Offset(intSkip).Find(&rating).Count(&count)
+			count = int64(len(products))
+			//productsRes =
+			productsRes = append(productsRes,
+				&models.ProductResult{
+					Id:            products[i].Id,
+					Sku:           products[i].Sku,
+					Name:          products[i].Name,
+					Stock:         products[i].Stock,
+					Price:         products[i].Price,
+					Image:         products[i].Image,
+					Category:      category,
+					Discount:      discount,
+					ProductRating: averageRating,
+					Rating:        rating,
+				},
+			)
+		}
+
+		meta := map[string]interface{}{
+			"total":  count,
+			"limit":  limit,
+			"skip":   skip,
+			"Rating": averageRating,
+		}
+
+		return c.Status(200).JSON(fiber.Map{
+			"success": true,
+			"message": "Success",
+			"data": map[string]interface{}{
+				"products": productsRes,
+				"meta":     meta,
+			},
+		})
+		//} else if categoryId != "" {
+		//	//filter by categoryId
+		//	var count int64
+		//	var averageRating float64
+		//	db.DB.Where("category_id = ?", categoryId).Limit(intLimit).Offset(intSkip).Find(&products).Count(&count)
+		//	//db.DB.Model(&rating).Select("AVG(product_rating)").Where("product_rating = ?", proRating)
+		//
+		//	var category models.Category
+		//	var discount models.Discount
+		//	var rating models.Rating
+		//
+		//	for i := 0; i < len(products); i++ {
+		//
+		//		db.DB.Table("categories").Where("id = ?", products[i].CategoryId).Find(&category)
+		//		//db.DB.Table("discounts").Where("id = ?", products[i].DiscountId).Find(&discount)
+		//		//db.DB.Table("ratings").Where("id = ?", products[i].ProductRating).Find(&ratings)
+		//
+		//		db.DB.Where("id = ?", products[i].DiscountId).Limit(intLimit).Offset(intSkip).Find(&discount).Count(&count)
+		//		db.DB.Find(&ratings, "product_rating")
+		//		db.DB.Model(&rating).Select("AVG(product_rating)").Where("product_id = ?", products[i].Id).Scan(&averageRating)
+		//
+		//		//ratingCount = int64(len(ratings))
+		//		//db.DB.Where("id = ?", products[i].RatingId).Limit(intLimit).Offset(intSkip).Find(&rating).Count(&count)
+		//		count = int64(len(products))
+		//		//productsRes =
+		//		productsRes = append(productsRes,
+		//			&models.ProductResult{
+		//				Id:            products[i].Id,
+		//				Sku:           products[i].Sku,
+		//				Name:          products[i].Name,
+		//				Stock:         products[i].Stock,
+		//				Price:         products[i].Price,
+		//				Image:         products[i].Image,
+		//				Category:      category,
+		//				Discount:      discount,
+		//				ProductRating: averageRating,
+		//				Rating:        rating,
+		//			},
+		//		)
+		//	}
+		//
+		//	meta := map[string]interface{}{
+		//		"total":  count,
+		//		"limit":  limit,
+		//		"skip":   skip,
+		//		"Rating": averageRating,
+		//	}
+		//
+		//	return c.Status(200).JSON(fiber.Map{
+		//		"success": true,
+		//		"message": "Success",
+		//		"data": map[string]interface{}{
+		//			"products": productsRes,
+		//			"meta":     meta,
+		//		},
+		//	})
+
+	} else if categoryId != "" {
+		// filter by categoryId
+		var count int64
+		var averageRating float64
+		db.DB.Where("category_id = ?", categoryId).Limit(intLimit).Offset(intSkip).Find(&products).Count(&count)
+
+		var category models.Category
+		var discount models.Discount
+		var rating models.Rating
+
 		for i := 0; i < len(products); i++ {
 
 			db.DB.Table("categories").Where("id = ?", products[i].CategoryId).Find(&category)
@@ -261,26 +379,33 @@ func ProductList(c *fiber.Ctx) error {
 			//db.DB.Table("ratings").Where("id = ?", products[i].ProductRating).Find(&ratings)
 
 			db.DB.Where("id = ?", products[i].DiscountId).Limit(intLimit).Offset(intSkip).Find(&discount).Count(&count)
+			db.DB.Find(&ratings, "product_rating")
+			db.DB.Model(&rating).Select("AVG(product_rating)").Where("product_id = ?", products[i].Id).Scan(&averageRating)
+
+			//ratingCount = int64(len(ratings))
+			//db.DB.Where("id = ?", products[i].RatingId).Limit(intLimit).Offset(intSkip).Find(&rating).Count(&count)
 			count = int64(len(products))
-			//productsRes =
 			productsRes = append(productsRes,
 				&models.ProductResult{
-					Id:       products[i].Id,
-					Sku:      products[i].Sku,
-					Name:     products[i].Name,
-					Stock:    products[i].Stock,
-					Price:    products[i].Price,
-					Image:    products[i].Image,
-					Category: category,
-					Discount: discount,
+					Id:            products[i].Id,
+					Sku:           products[i].Sku,
+					Name:          products[i].Name,
+					Stock:         products[i].Stock,
+					Price:         products[i].Price,
+					Image:         products[i].Image,
+					Category:      category,
+					Discount:      discount,
+					ProductRating: averageRating,
+					Rating:        rating,
 				},
 			)
 		}
 
 		meta := map[string]interface{}{
-			"total": count,
-			"limit": limit,
-			"skip":  skip,
+			"total":  count,
+			"limit":  limit,
+			"skip":   skip,
+			"Rating": averageRating,
 		}
 
 		return c.Status(200).JSON(fiber.Map{
@@ -294,6 +419,7 @@ func ProductList(c *fiber.Ctx) error {
 	} else {
 
 		var count int64
+		var averageRating float64
 		if categoryId != "" {
 			db.DB.Where("category_id = ? AND name= ?", categoryId, productName).Limit(intLimit).Offset(intSkip).Find(&products).Count(&count)
 		} else {
@@ -301,28 +427,33 @@ func ProductList(c *fiber.Ctx) error {
 		}
 		var category models.Category
 		var discount models.Discount
+		var rating models.Rating
 		for i := 0; i < len(products); i++ {
 			db.DB.Where("id = ?", products[i].CategoryId).Find(&category)
 			db.DB.Where("id = ?", products[i].DiscountId).Limit(intLimit).Offset(intSkip).Find(&discount).Count(&count)
+			db.DB.Find(&ratings, "product_rating")
+			db.DB.Model(&rating).Select("AVG(product_rating)").Where("product_id = ?", products[i].Id).Scan(&averageRating)
 			count = int64(len(products))
 			productsRes = append(productsRes,
 				&models.ProductResult{
-					Id:       products[i].Id,
-					Sku:      products[i].Sku,
-					Name:     products[i].Name,
-					Stock:    products[i].Stock,
-					Price:    products[i].Price,
-					Image:    products[i].Image,
-					Category: category,
-					Discount: discount,
+					Id:            products[i].Id,
+					Sku:           products[i].Sku,
+					Name:          products[i].Name,
+					Stock:         products[i].Stock,
+					Price:         products[i].Price,
+					Image:         products[i].Image,
+					Category:      category,
+					Discount:      discount,
+					ProductRating: averageRating,
 				},
 			)
 		}
 
 		meta := map[string]interface{}{
-			"total": count,
-			"limit": limit,
-			"skip":  skip,
+			"total":  count,
+			"Rating": averageRating,
+			"limit":  limit,
+			"skip":   skip,
 		}
 
 		return c.Status(200).JSON(fiber.Map{

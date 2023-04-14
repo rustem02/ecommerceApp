@@ -53,7 +53,7 @@ func RatingList(c *fiber.Ctx) error {
 		RatingId   int            `json:"ratingId"`
 		CashierID  int            `json:"cashiersId"`
 		ProductID  int            `json:"productId"`
-		ProdRating float32        `json:"prodRating"`
+		ProdRating float64        `json:"prodRating"`
 		CreatedAt  time.Time      `json:"createdAt"`
 		Cashiers   models.Cashier `json:"cashier"`
 		Product    models.Product `json:"product"`
@@ -70,7 +70,7 @@ func RatingList(c *fiber.Ctx) error {
 			RatingId:   v.Id,
 			CashierID:  v.CashierId,
 			ProductID:  v.ProductId,
-			ProdRating: float32(v.ProductRating),
+			ProdRating: float64(v.ProductRating),
 			CreatedAt:  v.CreatedAt,
 			Cashiers:   cashier,
 			Product:    product,
