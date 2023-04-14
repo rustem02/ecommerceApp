@@ -13,14 +13,15 @@ import (
 
 type Comment struct {
 	Comment   models.Comment
-	CashierId string `json:"cashierId"`
+	CashierId Cashiers `json:"cashierId"`
 }
 
 type NewComment struct {
-	Id        int    `json:"id" gorm:"primaryKey"`
-	CashierId uint   `json:"cashierId"`
-	ProductId uint   `json:"productId"`
-	Content   string `json:"content"`
+	Id      int `json:"id" gorm:"primaryKey"`
+	Cashier int `json:"cashierId"`
+	//Cashier int `json:"cashierId"`
+	Product int    `json:"productId"`
+	Content string `json:"content"`
 }
 
 func CreateComment(c *fiber.Ctx) error {
@@ -127,11 +128,13 @@ func CreateAnotherComment(c *fiber.Ctx) error {
 		log.Fatalf("Product error in post request %v", err)
 	}
 	var p []models.Product
+	//var cashier models.Cashier
 	db.DB.Find(&p)
-
 	comment := models.Comment{
-		CashierId: data.CashierId,
-		ProductId: data.ProductId,
+		CashierId: data.Cashier,
+		ProductId: data.Product,
+		//CashierId: data.CashierId,
+		//ProductId: data.ProductId,
 		Content:   data.Content,
 		CreatedAt: time.Time{},
 		UpdatedAt: time.Time{},
@@ -154,21 +157,46 @@ func CommentsList(c *fiber.Ctx) error {
 	skip, _ := strconv.Atoi(c.Query("skip"))
 	var count int64
 	var comment []models.Comment
+
 	db.DB.Select("*").Limit(limit).Offset(skip).Find(&comment).Count(&count)
-	metaMap := map[string]interface{}{
-		"total": count,
-		"limit": limit,
-		"skip":  skip,
+
+	type CommentList struct {
+		CommentId int            `json:"commentId"`
+		CashierID int            `json:"cashiersId"`
+		ProductID int            `json:"productId"`
+		Content   string         `json:"content"`
+		CreatedAt time.Time      `json:"createdAt"`
+		Cashiers  models.Cashier `json:"cashier"`
+		Product   models.Product `json:"product"`
 	}
-	cashiersData := map[string]interface{}{
-		"comments": comment,
-		"meta":     metaMap,
+	CommentResponse := make([]*CommentList, 0)
+
+	for _, v := range comment {
+		cashier := models.Cashier{}
+		db.DB.Where("id = ?", v.CashierId).Find(&cashier)
+		product := models.Product{}
+		db.DB.Where("id = ?", v.ProductId).Find(&product)
+
+		CommentResponse = append(CommentResponse, &CommentList{
+			CommentId: v.Id,
+			CashierID: v.CashierId,
+			ProductID: v.ProductId,
+			Content:   v.Content,
+			CreatedAt: v.CreatedAt,
+			Cashiers:  cashier,
+			Product:   product,
+		})
+
 	}
 
-	return c.Status(200).JSON(fiber.Map{
+	return c.Status(404).JSON(fiber.Map{
 		"success": true,
-		"Message": "Success",
-		"data":    cashiersData,
+		"message": "Sucess",
+		"data":    CommentResponse,
+		"meta": map[string]interface{}{
+			"total": count,
+			"limit": limit,
+			"skip":  skip,
+		},
 	})
-
 }

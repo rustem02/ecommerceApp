@@ -42,6 +42,7 @@ func CreateOrder(c *fiber.Ctx) error {
 	}
 
 	body := struct {
+		CashierId int        `json:"cashierId"`
 		PaymentId int        `json:"paymentId"`
 		TotalPaid int        `json:"totalPaid"`
 		Products  []products `json:"products"`
@@ -103,7 +104,7 @@ func CreateOrder(c *fiber.Ctx) error {
 
 	}
 	orderResp := models.Order{
-		CashierID:      1,
+		CashierID:      body.CashierId,
 		PaymentTypesId: body.PaymentId,
 		TotalPrice:     TotalInvoicePrice.ttprice,
 		TotalPaid:      body.TotalPaid,

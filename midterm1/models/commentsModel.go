@@ -4,8 +4,8 @@ import "time"
 
 type Comment struct {
 	Id        int    `json:"id" gorm:"primaryKey"`
-	CashierId uint   `json:"cashierId"` //Cashier
-	ProductId uint   `json:"productId"` //Product
+	CashierId int    `json:"cashierId"` //Cashier
+	ProductId int    `json:"productId"` //Product
 	Content   string `json:"content"`
 	//Cashier   Cashier  `json:"cashier"`
 	CreatedAt time.Time `json:"createdAt"`
