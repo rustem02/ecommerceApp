@@ -362,66 +362,66 @@ func ProductList(c *fiber.Ctx) error {
 		//		},
 		//	})
 
-	} else if categoryId != "" {
-		// filter by categoryId
-		var count int64
-		var averageRating float64
-		db.DB.Where("category_id = ?", categoryId).Limit(intLimit).Offset(intSkip).Find(&products).Count(&count)
-
-		var category models.Category
-		var discount models.Discount
-		var rating models.Rating
-
-		for i := 0; i < len(products); i++ {
-
-			db.DB.Table("categories").Where("id = ?", products[i].CategoryId).Find(&category)
-			//db.DB.Table("discounts").Where("id = ?", products[i].DiscountId).Find(&discount)
-			//db.DB.Table("ratings").Where("id = ?", products[i].ProductRating).Find(&ratings)
-
-			db.DB.Where("id = ?", products[i].DiscountId).Limit(intLimit).Offset(intSkip).Find(&discount).Count(&count)
-			db.DB.Find(&ratings, "product_rating")
-			db.DB.Model(&rating).Select("AVG(product_rating)").Where("product_id = ?", products[i].Id).Scan(&averageRating)
-
-			//ratingCount = int64(len(ratings))
-			//db.DB.Where("id = ?", products[i].RatingId).Limit(intLimit).Offset(intSkip).Find(&rating).Count(&count)
-			count = int64(len(products))
-			productsRes = append(productsRes,
-				&models.ProductResult{
-					Id:            products[i].Id,
-					Sku:           products[i].Sku,
-					Name:          products[i].Name,
-					Stock:         products[i].Stock,
-					Price:         products[i].Price,
-					Image:         products[i].Image,
-					Category:      category,
-					Discount:      discount,
-					ProductRating: averageRating,
-					Rating:        rating,
-				},
-			)
-		}
-
-		meta := map[string]interface{}{
-			"total":  count,
-			"limit":  limit,
-			"skip":   skip,
-			"Rating": averageRating,
-		}
-
-		return c.Status(200).JSON(fiber.Map{
-			"success": true,
-			"message": "Success",
-			"data": map[string]interface{}{
-				"products": productsRes,
-				"meta":     meta,
-			},
-		})
+		//} else if categoryId != "" {
+		//	// filter by categoryId
+		//	var count int64
+		//	var averageRating float64
+		//	db.DB.Where("category_id = ?", categoryId).Limit(intLimit).Offset(intSkip).Find(&products).Count(&count)
+		//
+		//	var category models.Category
+		//	var discount models.Discount
+		//	var rating models.Rating
+		//
+		//	for i := 0; i < len(products); i++ {
+		//
+		//		db.DB.Table("categories").Where("id = ?", products[i].CategoryId).Find(&category)
+		//		//db.DB.Table("discounts").Where("id = ?", products[i].DiscountId).Find(&discount)
+		//		//db.DB.Table("ratings").Where("id = ?", products[i].ProductRating).Find(&ratings)
+		//
+		//		db.DB.Where("id = ?", products[i].DiscountId).Limit(intLimit).Offset(intSkip).Find(&discount).Count(&count)
+		//		db.DB.Find(&ratings, "product_rating")
+		//		db.DB.Model(&rating).Select("AVG(product_rating)").Where("product_id = ?", products[i].Id).Scan(&averageRating)
+		//
+		//		//ratingCount = int64(len(ratings))
+		//		//db.DB.Where("id = ?", products[i].RatingId).Limit(intLimit).Offset(intSkip).Find(&rating).Count(&count)
+		//		count = int64(len(products))
+		//		productsRes = append(productsRes,
+		//			&models.ProductResult{
+		//				Id:            products[i].Id,
+		//				Sku:           products[i].Sku,
+		//				Name:          products[i].Name,
+		//				Stock:         products[i].Stock,
+		//				Price:         products[i].Price,
+		//				Image:         products[i].Image,
+		//				Category:      category,
+		//				Discount:      discount,
+		//				ProductRating: averageRating,
+		//				Rating:        rating,
+		//			},
+		//		)
+		//	}
+		//
+		//	meta := map[string]interface{}{
+		//		"total":  count,
+		//		"limit":  limit,
+		//		"skip":   skip,
+		//		"Rating": averageRating,
+		//	}
+		//
+		//	return c.Status(200).JSON(fiber.Map{
+		//		"success": true,
+		//		"message": "Success",
+		//		"data": map[string]interface{}{
+		//			"products": productsRes,
+		//			"meta":     meta,
+		//		},
+		//	})
 	} else {
 
 		var count int64
 		var averageRating float64
 		if categoryId != "" {
-			db.DB.Where("category_id = ? AND name= ?", categoryId, productName).Limit(intLimit).Offset(intSkip).Find(&products).Count(&count)
+			db.DB.Where("category_id = ?", categoryId).Limit(intLimit).Offset(intSkip).Find(&products).Count(&count)
 		} else {
 			db.DB.Where(" name= ?", productName).Limit(intLimit).Offset(intSkip).Find(&products).Count(&count)
 		}
