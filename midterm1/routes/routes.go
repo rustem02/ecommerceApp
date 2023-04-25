@@ -7,6 +7,10 @@ import (
 
 func Setup(app *fiber.App) {
 	//r := gin.Default()
+
+	//Welcome Page
+	app.Get("/", controllers.HomePage)
+
 	//authentication routes
 	app.Post("/cashiers/:cashierId/login", controllers.Login)
 	app.Post("/cashiers/:cashierId/logout", controllers.Logout)
