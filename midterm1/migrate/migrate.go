@@ -16,7 +16,7 @@ func init() {
 
 // Для миграции go run migrate/migrate.go
 func main() {
-	initializers.DB.AutoMigrate(&models.Post{}, &models.User{})
+	//initializers.DB.AutoMigrate(&models.User{})
 	//config.DB.AutoMigrate(&entities.User{}, &entities.Product{})
 	db.DB.AutoMigrate(&models.Cashier{}, &models.Category{}, &models.Payment{}, &models.PaymentType{}, &models.Product{}, &models.Discount{}, &models.Order{}, &models.Comment{}, &models.Rating{})
 

@@ -8,13 +8,12 @@ import (
 func Setup(app *fiber.App) {
 	//r := gin.Default()
 
-	//Welcome Page
+	//Welcome, Page
 	app.Get("/", controllers.HomePage)
 
 	//authentication routes
 	app.Post("/cashiers/:cashierId/login", controllers.Login)
 	app.Post("/cashiers/:cashierId/logout", controllers.Logout)
-	app.Get("/cashiers/:cashierId/passcode", controllers.Passcode)
 
 	//Cashier routes
 	app.Get("/cashiers", controllers.CashiersList)
@@ -48,13 +47,6 @@ func Setup(app *fiber.App) {
 	app.Get("/orders", controllers.OrdersList)
 	app.Get("/orders/:orderId", controllers.OrderDetail)
 	app.Post("/orders", controllers.CreateOrder)
-	app.Post("/orders/subtotal", controllers.SubTotalOrder)
-	app.Get("/orders/:orderId/download", controllers.DownloadOrder)
-	app.Get("/orders/:orderId/check-download", controllers.CheckOrder)
-
-	//reports
-	app.Get("/revenues", controllers.GetRevenues)
-	app.Get("/solds", controllers.GetSolds)
 
 	//comments
 	app.Post("/comments", controllers.CreateAnotherComment)

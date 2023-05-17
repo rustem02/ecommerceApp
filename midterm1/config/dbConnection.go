@@ -11,10 +11,10 @@ var DB *gorm.DB
 
 func Connect() {
 	//godotenv.Load()
-	//DbHost := os.Getenv("MYSQL_HOST")
-	//DbName := os.Getenv("MYSQL_DBNAME")
-	//DbUsername := os.Getenv("MYSQL_USER")
-	//DbPassword := os.Getenv("MYSQL_PASSWORD")
+	//DbHost := os.Getenv("localhost")
+	//DbName := os.Getenv("golang")
+	//DbUsername := os.Getenv("rustem")
+	//DbPassword := os.Getenv("123")
 	//
 	//connection := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", DbUsername, DbPassword, DbHost, DbName)
 	dbConnection, err := gorm.Open(sqlite.Open("golang.db"), &gorm.Config{})

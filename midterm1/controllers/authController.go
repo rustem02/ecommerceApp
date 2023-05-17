@@ -40,15 +40,6 @@ func Login(c *fiber.Ctx) error {
 		})
 	}
 	//проверка если пасскод не совпадает
-	//fmt.Println("--------------------------------")
-	//fmt.Println("--------------DB Passcode------------------", cashier.Passcode)
-	//fmt.Println("--------------DB Passcode typeOf------------------", reflect.TypeOf(cashier.Passcode))
-	//fmt.Println("--------------------------------")
-	//
-	//fmt.Println("--------------------------------")
-	//fmt.Println("--------------body passcode------------------", data["passcode"])
-	//fmt.Println("--------------DB Passcode typeOf------------------", reflect.TypeOf(data["passcode"]))
-	//fmt.Println("--------------------------------")
 
 	if cashier.Passcode != data["passcode"] {
 		return c.Status(401).JSON(fiber.Map{
@@ -122,27 +113,5 @@ func Logout(c *fiber.Ctx) error {
 	return c.Status(200).JSON(fiber.Map{
 		"success": true,
 		"Message": "success logout",
-	})
-}
-func Passcode(c *fiber.Ctx) error {
-	cashierId := c.Params("cashierId")
-	var cashier models.Cashier
-	db.DB.Select("id,firstName, lastName, passcode").Where("id=?", cashierId).First(&cashier)
-
-	if cashier.FirstName == "" || cashier.Id == 0 {
-		return c.Status(404).JSON(fiber.Map{
-			"success": false,
-			"message": "Cashier Not Found",
-			"error":   map[string]interface{}{},
-		})
-	}
-
-	cashierData := make(map[string]interface{})
-	cashierData["passcode"] = cashier.Passcode
-
-	return c.Status(200).JSON(fiber.Map{
-		"success": true,
-		"message": "Success",
-		"data":    cashierData,
 	})
 }

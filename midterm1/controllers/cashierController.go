@@ -8,41 +8,6 @@ import (
 	"strconv"
 )
 
-//func CreateCashier(ctx *gin.Context) {
-//	var body struct {
-//		Name     string
-//		Email    string `gorm:"unique"`
-//		Passcode string
-//	}
-//
-//	if ctx.Bind(&body) != nil {
-//		ctx.JSON(http.StatusBadRequest, gin.H{
-//			"message": "Failed to read data",
-//		})
-//		return
-//	}
-//
-//	cashier := models.Cashier{
-//		Name:     body.Name,
-//		Email:    body.Email,
-//		Passcode: body.Passcode,
-//	}
-//	result := db.DB.Create(&cashier)
-//
-//	if result.Error != nil {
-//		ctx.JSON(http.StatusBadRequest, gin.H{
-//			"message": "Failed to create cashier",
-//		})
-//		return
-//	}
-//
-//	ctx.JSON(200, gin.H{
-//		"cashier": cashier,
-//	})
-//
-//	return
-//}
-
 func CreateCashier(c *fiber.Ctx) error {
 	var data map[string]string
 	err := c.BodyParser(&data)
