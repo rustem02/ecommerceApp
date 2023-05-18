@@ -1,0 +1,59 @@
+package routes
+
+import (
+	"github.com/Krasav4ik01/ecommerceApp/controllers"
+	"github.com/gofiber/fiber/v2"
+)
+
+func Setup(app *fiber.App) {
+	//r := gin.Default()
+
+	//Welcome, Page
+	app.Get("/", controllers.HomePage)
+
+	//authentication routes
+	app.Post("/cashiers/:cashierId/login", controllers.Login)
+	app.Post("/cashiers/:cashierId/logout", controllers.Logout)
+
+	//Cashier routes
+	app.Get("/cashiers", controllers.CashiersList)
+	app.Get("/cashiers/:cashierId", controllers.GetCashierDetails)
+	app.Post("/cashiers", controllers.CreateCashier)
+	app.Delete("/cashiers/:cashierId", controllers.DeleteCashier)
+	app.Put("/cashiers/:cashierId", controllers.UpdateCashier)
+
+	//Category routes
+	app.Get("/categories", controllers.CategoryList)
+	app.Get("/categories/:categoryId", controllers.GetCategoryDetails)
+	app.Post("/categories", controllers.CreateCategory)
+	app.Delete("/categories/:categoryId", controllers.DeleteCategory)
+	app.Put("/categories/:categoryId", controllers.UpdateCategory)
+
+	//Products routes
+	app.Get("/products", controllers.ProductList)
+	app.Get("/products/:productId", controllers.GetProductDetails)
+	app.Post("/products", controllers.CreateProduct)
+	app.Delete("/products/:productId", controllers.DeleteProduct)
+	app.Put("/products/:productId", controllers.UpdateProduct)
+
+	//Payment routes
+	app.Get("/payments", controllers.PaymentList)
+	app.Get("/payments/:paymentId", controllers.GetPaymentDetails)
+	app.Post("/payments", controllers.CreatePayment)
+	app.Delete("/payments/:paymentId", controllers.DeletePayment)
+	app.Put("/payments/:paymentId", controllers.UpdatePayment)
+
+	//Order routes
+	app.Get("/orders", controllers.OrdersList)
+	app.Get("/orders/:orderId", controllers.OrderDetail)
+	app.Post("/orders", controllers.CreateOrder)
+
+	//comments
+	app.Post("/comments", controllers.CreateAnotherComment)
+	app.Get("/comments", controllers.CommentsList)
+
+	//ratings
+	app.Post("/ratings", controllers.CreateRating)
+	app.Get("/ratings", controllers.RatingList)
+
+}
